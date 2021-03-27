@@ -12,7 +12,7 @@
     </mat-card-content>
     <mat-card-actions>
       Population:  {{selectedCity?.Population | number}} M
-      <button (click)="nuke()" mat-button>NUKE</button>
-      <button (click)="grow()" mat-button>Grow</button>
+      <button (click)="nuke(selectedCity)" mat-button>NUKE</button>
+      <button (click)="grow(selectedCity)" mat-button>Grow</button>
     </mat-card-actions>
   </mat-card>

@@ -8,6 +8,8 @@ import { CitiesComponent } from './cities/cities.component';
 import { CityComponent } from './city/city.component';
 import {MatCardModule} from '@angular/material/card';
 import {MatGridListModule} from '@angular/material/grid-list';
+import { StoreModule } from '@ngrx/store';
+import { CityReducer } from './city-store/city.reducer';
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,7 +21,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
     AppRoutingModule,
     BrowserAnimationsModule,
     MatCardModule,
-    MatGridListModule
+    MatGridListModule,
+    StoreModule.forRoot({cities:CityReducer})
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,4 +1,5 @@
 export interface City {
+    Id: number;
     CityName: string;
     CityImage: string;
     Nation: string;
