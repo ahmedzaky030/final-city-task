@@ -17,11 +17,11 @@ export class CityComponent implements OnInit {
   }
 
   nuke(city: City){
-   this.store.dispatch(nuke({Id:city.Id}))
+   this.store.dispatch(nuke({city: city}))
   }
 
   grow(city: City){
-    this.store.dispatch(grow({Id:city.Id}))
+    this.store.dispatch(grow({city: city}))
   }
 
 

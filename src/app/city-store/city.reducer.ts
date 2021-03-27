@@ -1,7 +1,7 @@
 import { createReducer, on } from "@ngrx/store";
 import { City } from "../city.model";
 import * as citiesJson from '../../assets/cities.json';
-import { nuke, grow } from "./city.actions";
+import { nuke, grow, filterCitiesByPopulation } from "./city.actions";
 
 export interface CitiesState {
     cities: City[];
@@ -13,15 +13,37 @@ export const initialState = {
  
 export const CityReducer = createReducer(
   initialState,
-  on(nuke, (state, {Id}) => {
-      let selectedCity = state.cities.find(v => v.Id == Id);
-      selectedCity.Population -= 5000000;
-      return {...state, ...selectedCity};
+  on(nuke, (state, {city}) => {
+    return {...state, 
+      cities:state.cities.map(value => {
+        if(value.Id !== city.Id ){ 
+          return value;
+        } else {
+          return { ...value, Population: value.Population - 5000000}
+        }
+        
+      })
+    }
   }),
-  on(grow, (state, {Id}) => {
-    let selectedCity = state.cities.find(v => v.Id == Id);
-    selectedCity.Population += 1000000;
-    return {...state, ...selectedCity};
+  
+  on(grow, (state, {city}) => {
+    return {...state, 
+      cities:state.cities.map(value => {
+        if(value.Id !== city.Id ){ 
+          return value;
+        } else {
+          return { ...value, Population: value.Population + 1000000}
+        }
+        
+      })
+    }
+  }),
+
+  on(filterCitiesByPopulation, (state, {population}) => {
+    let filteredCities = citiesJson.cities.filter(value => value.Population >= population) as City[];
+    return {...state, 
+      cities: filteredCities
+    }
   }),
  
 );

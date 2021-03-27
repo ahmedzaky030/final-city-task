@@ -4,6 +4,8 @@ import * as citiesJson from '../../assets/cities.json';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { CitiesState } from '../city-store/city.reducer';
+import { MatSliderChange } from '@angular/material/slider';
+import { filterCitiesByPopulation } from '../city-store/city.actions';
 
 export interface Tile {
   cols: number;
@@ -19,6 +21,7 @@ export interface Tile {
 })
 export class CitiesComponent implements OnInit {
   cities$: City[];
+  sliderValue: string;
   constructor(private store: Store) {
    
  
@@ -30,4 +33,15 @@ export class CitiesComponent implements OnInit {
     })
   }
 
+  formatLabel(value: number) {
+    if (value >= 1000000) {
+      return Math.round(value / 1000000) + 'M';
+    }
+    return value;
+  }
+
+  onSliderChange(change: MatSliderChange){
+   this.sliderValue = Math.round(change.value / 1000000) + 'M';;
+   this.store.dispatch(filterCitiesByPopulation({population:change.value}))
+  }
 }
